@@ -18,6 +18,16 @@ interface Content {
 
 // analyzer 负责分析
 export default class DellAnalyzer implements Analyzer {
+  private static instance: DellAnalyzer;
+  private constructor() {}
+
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new DellAnalyzer();
+    }
+    return this.instance;
+  }
+
   private getCourseInfo(html: string) {
     const $ = cheerio.load(html);
     const courseItems = $('.course-item');
@@ -46,7 +56,7 @@ export default class DellAnalyzer implements Analyzer {
     };
   }
 
-  generateJsonContent(courseInfo: CourseResult, filePath: string) {
+  private generateJsonContent(courseInfo: CourseResult, filePath: string) {
     let fileContent: Content = {};
     // 判断文件是否存在
     if (fs.existsSync(filePath)) {

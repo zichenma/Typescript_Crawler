@@ -4,7 +4,6 @@ import path from 'path';
 import superagent from 'superagent';
 // import cheerio from 'cheerio';
 import DellAnalyzer from './dellAnalyzer';
-// import LeeAnalyzer from './leeAnalyzer';
 
 // 因为 dellAnalyzer 也需要遵守这个约束，所以要导出
 export interface Analyzer {
@@ -76,7 +75,7 @@ class Crowller {
   //   };
   // }
 
-  async getRawHtml() {
+  private async getRawHtml() {
     const result = await superagent.get(this.url);
     // 因为 getCourseInfo 和 getRawHtml 耦合
     // 所以需要 initSpiderProcess() 单独处理爬虫功能
@@ -99,11 +98,11 @@ class Crowller {
   //   return fileContent;
   // }
 
-  writeFile(content: string) {
+  private writeFile(content: string) {
     fs.writeFileSync(this.filePath, content);
   }
 
-  async initSpiderProcess() {
+  private async initSpiderProcess() {
     // 1. 首先获取 HTML
     // 2. 再拿到课程信息
     // 3. 存储到Json文件里
@@ -122,6 +121,5 @@ class Crowller {
 
 const secret = 'secretKey';
 const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
-const analyzer = new DellAnalyzer();
-// const analyzer = new LeeAnalyzer();
+const analyzer = DellAnalyzer.getInstance();
 new Crowller(url, analyzer);

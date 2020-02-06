@@ -3,7 +3,6 @@ import path from 'path';
 // ts -> .d.ts 翻译文件 -> js
 import superagent from 'superagent';
 // import cheerio from 'cheerio';
-import DellAnalyzer from './dellAnalyzer';
 
 // 因为 dellAnalyzer 也需要遵守这个约束，所以要导出
 export interface Analyzer {
@@ -119,7 +118,4 @@ class Crowller {
   }
 }
 
-const secret = 'secretKey';
-const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
-const analyzer = DellAnalyzer.getInstance();
-new Crowller(url, analyzer);
+export default Crowller;

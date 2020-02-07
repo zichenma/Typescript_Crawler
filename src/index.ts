@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import router from './router';
 
@@ -10,6 +10,10 @@ const app = express();
 
 // 一定要放在router前面，因为必须先去解析域名
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use((req: Request, res: Response, next: NextFunction) => {
+  req.teacherName = 'dell';
+  next();
+});
 app.use(router);
 
 app.listen(7001, () => {

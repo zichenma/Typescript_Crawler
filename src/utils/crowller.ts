@@ -43,7 +43,7 @@ class Crowller {
   // private secret = 'secretKey';
   // private url = `http://www.dell-lee.com/typescript/demo.html?secret=${this.secret}`;
   // 根据当前路径 __dirname 去找跟目录下的 course.json
-  private filePath = path.resolve(__dirname, '../data/course.json');
+  private filePath = path.resolve(__dirname, '../../data/course.json');
 
   // 迁移到 dellAnalyzer
   // getCourseInfo(html: string) {

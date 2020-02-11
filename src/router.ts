@@ -20,31 +20,7 @@ const checkLogin = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-router.get('/', (req: Request, res: Response) => {
-  const isLogin = req.session ? req.session.login : undefined;
-  if (isLogin) {
-    res.send(`
-    <html>
-    <body>
-      <a href='/getData'>Get Content</a>
-      <a href='/showData'>Show Content</a>
-       <a href='/logout'>Log out</a>
-    </body>
-  <html> 
-    `);
-  } else {
-    res.send(`
-    <html>
-      <body>
-        <form method="post" action="/login">
-          <input type="password" name="password" />
-          <button>LogIn</button>
-        </form>
-      </body>
-    <html> 
-    `);
-  }
-});
+router.get('/', () => {});
 
 router.post('/login', (req: BodyRequest, res: Response) => {
   const { password } = req.body;

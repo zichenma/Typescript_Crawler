@@ -19,15 +19,7 @@ var checkLogin = function (req, res, next) {
         res.json(util_1.getResponseData(null, 'Please login first'));
     }
 };
-router.get('/', function (req, res) {
-    var isLogin = req.session ? req.session.login : undefined;
-    if (isLogin) {
-        res.send("\n    <html>\n    <body>\n      <a href='/getData'>Get Content</a>\n      <a href='/showData'>Show Content</a>\n       <a href='/logout'>Log out</a>\n    </body>\n  <html> \n    ");
-    }
-    else {
-        res.send("\n    <html>\n      <body>\n        <form method=\"post\" action=\"/login\">\n          <input type=\"password\" name=\"password\" />\n          <button>LogIn</button>\n        </form>\n      </body>\n    <html> \n    ");
-    }
-});
+router.get('/', function () { });
 router.post('/login', function (req, res) {
     var password = req.body.password;
     var isLogin = req.session ? req.session.login : undefined;

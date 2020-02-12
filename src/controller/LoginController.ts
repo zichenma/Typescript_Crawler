@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { Request, Response } from 'express';
 import { controller, get } from './decorator';
+import { getResponseData } from '../utils/util';
 
 interface BodyRequest extends Request {
   body: { [key: string]: string | undefined };
@@ -24,8 +25,13 @@ interface BodyRequest extends Request {
 
 @controller // 类的装饰器一般做逻辑的融合
 class LoginController {
-  // @get('/login')
-  // login() {}
+  @get('/logout')
+  logout(req: BodyRequest, res: Response) {
+    if (req.session) {
+      req.session.login = undefined;
+    }
+    res.json(getResponseData(true));
+  }
 
   @get('/')
   home(req: BodyRequest, res: Response) {

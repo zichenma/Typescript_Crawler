@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
-import router from './router';
+import './controller/LoginController';
+import { router } from './controller/decorator';
 
 // 问题一： express 库的类型定义文件 ,.d.ts 文件描述不准
 // 问题二： 当使用中间件时候，对 req， res, 做了修改之后，实际上

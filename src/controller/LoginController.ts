@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Request, Response } from 'express';
-import { controller, get } from './decorator';
+import { controller, get, post } from './decorator';
 import { getResponseData } from '../utils/util';
 
 interface BodyRequest extends Request {
@@ -25,6 +25,23 @@ interface BodyRequest extends Request {
 
 @controller // 类的装饰器一般做逻辑的融合
 class LoginController {
+  @post('/login')
+  login(req: BodyRequest, res: Response) {
+    const { password } = req.body;
+    const isLogin = req.session ? req.session.login : undefined;
+
+    if (isLogin) {
+      res.json(getResponseData(false, 'Already login'));
+    } else {
+      if (password === '123' && req.session) {
+        req.session.login = true;
+        res.json(getResponseData(true));
+      } else {
+        res.json(getResponseData(false, 'Login Failed'));
+      }
+    }
+  }
+
   @get('/logout')
   logout(req: BodyRequest, res: Response) {
     if (req.session) {

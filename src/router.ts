@@ -20,22 +20,6 @@
 //   }
 // };
 
-// router.post('/login', (req: BodyRequest, res: Response) => {
-//   const { password } = req.body;
-//   const isLogin = req.session ? req.session.login : undefined;
-
-//   if (isLogin) {
-//     res.json(getResponseData(false, 'Already login'));
-//   } else {
-//     if (password === '123' && req.session) {
-//       req.session.login = true;
-//       res.json(getResponseData(true));
-//     } else {
-//       res.json(getResponseData(false, 'Login Failed'));
-//     }
-//   }
-// });
-
 // router.get('/getData', checkLogin, (req: BodyRequest, res: Response) => {
 //   const secret = 'secretKey';
 //   const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;

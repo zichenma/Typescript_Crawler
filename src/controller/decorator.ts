@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, RequestHandler } from 'express';
 export const router = Router();
 
 enum Method {
@@ -13,10 +13,21 @@ export function controller(target: any) {
     const method: Method = Reflect.getMetadata('method', target.prototype, key);
     // handler 是 controller 中具体的的方法 e.g. login() logout()
     const handler = target.prototype[key];
+    const middleware = Reflect.getMetadata('middleware', target.prototype, key);
     if (path && method && handler) {
-      router[method](path, handler);
+      if (middleware) {
+        router[method](path, middleware, handler);
+      } else {
+        router[method](path, handler);
+      }
     }
   }
+}
+
+export function use(middleware: RequestHandler) {
+  return function(target: any, key: string) {
+    Reflect.defineMetadata('middleware', middleware, target, key);
+  };
 }
 
 function getRequestDecorator(type: string) {

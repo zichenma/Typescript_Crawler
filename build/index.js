@@ -7,6 +7,7 @@ var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var cookie_session_1 = __importDefault(require("cookie-session"));
 require("./controller/LoginController");
+require("./controller/CrollwerController");
 var decorator_1 = require("./controller/decorator");
 var app = express_1.default();
 app.use(body_parser_1.default.urlencoded({ extended: false }));

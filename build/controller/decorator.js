@@ -12,12 +12,24 @@ function controller(target) {
         var path = Reflect.getMetadata('path', target.prototype, key);
         var method = Reflect.getMetadata('method', target.prototype, key);
         var handler = target.prototype[key];
+        var middleware = Reflect.getMetadata('middleware', target.prototype, key);
         if (path && method && handler) {
-            exports.router[method](path, handler);
+            if (middleware) {
+                exports.router[method](path, middleware, handler);
+            }
+            else {
+                exports.router[method](path, handler);
+            }
         }
     }
 }
 exports.controller = controller;
+function use(middleware) {
+    return function (target, key) {
+        Reflect.defineMetadata('middleware', middleware, target, key);
+    };
+}
+exports.use = use;
 function getRequestDecorator(type) {
     return function (path) {
         return function (target, key) {

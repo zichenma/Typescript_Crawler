@@ -1,7 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
+// 只要引用过一次类，就可以调用其所有装饰器
 import './controller/LoginController';
+import './controller/CrollwerController';
 import { router } from './controller/decorator';
 
 // 问题一： express 库的类型定义文件 ,.d.ts 文件描述不准

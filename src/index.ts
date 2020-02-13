@@ -4,7 +4,7 @@ import cookieSession from 'cookie-session';
 // 只要引用过一次类，就可以调用其所有装饰器
 import './controller/LoginController';
 import './controller/CrollwerController';
-import { router } from './controller/decorator';
+import router from './router';
 
 // 问题一： express 库的类型定义文件 ,.d.ts 文件描述不准
 // 问题二： 当使用中间件时候，对 req， res, 做了修改之后，实际上

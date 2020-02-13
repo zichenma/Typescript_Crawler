@@ -15,12 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 require("reflect-metadata");
-var decorator_1 = require("./decorator");
+var decorator_1 = require("../decorator");
 var util_1 = require("../utils/util");
 var crowller_1 = __importDefault(require("../utils/crowller"));
 var analyzer_1 = __importDefault(require("../utils/analyzer"));
 var checkLogin = function (req, res, next) {
-    var isLogin = req.session ? req.session.login : false;
+    var isLogin = !!(req.session ? req.session.login : false);
     if (isLogin) {
         next();
     }
@@ -32,11 +32,16 @@ var CrowllerController = (function () {
     function CrowllerController() {
     }
     CrowllerController.prototype.getData = function (req, res) {
-        var secret = 'secretKey';
+        var secret = 'secretKey1';
         var url = "http://www.dell-lee.com/typescript/demo.html?secret=" + secret;
         var analyzer = analyzer_1.default.getInstance();
-        new crowller_1.default(url, analyzer);
-        res.json(util_1.getResponseData(true));
+        try {
+            new crowller_1.default(url, analyzer);
+            res.json(util_1.getResponseData(true));
+        }
+        catch (error) {
+            res.json(util_1.getResponseData(false, "Error: " + error));
+        }
     };
     CrowllerController.prototype.showData = function (req, res) {
         try {
@@ -63,7 +68,8 @@ var CrowllerController = (function () {
         __metadata("design:returntype", void 0)
     ], CrowllerController.prototype, "showData", null);
     CrowllerController = __decorate([
-        decorator_1.controller
+        decorator_1.controller('/')
     ], CrowllerController);
     return CrowllerController;
 }());
+exports.CrowllerController = CrowllerController;

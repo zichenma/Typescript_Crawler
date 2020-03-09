@@ -21,7 +21,6 @@ var crowller_1 = __importDefault(require("../utils/crowller"));
 var analyzer_1 = __importDefault(require("../utils/analyzer"));
 var checkLogin = function (req, res, next) {
     var isLogin = !!(req.session ? req.session.login : false);
-    console.log('check login middleware');
     if (isLogin) {
         next();
     }
@@ -30,7 +29,6 @@ var checkLogin = function (req, res, next) {
     }
 };
 var test = function (req, res, next) {
-    console.log('test middleware');
     next();
 };
 var CrowllerController = (function () {
@@ -61,7 +59,6 @@ var CrowllerController = (function () {
     __decorate([
         decorator_1.get('/getData'),
         decorator_1.use(checkLogin),
-        decorator_1.use(test),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)

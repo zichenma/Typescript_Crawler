@@ -19,6 +19,7 @@ var decorator_1 = require("../decorator");
 var util_1 = require("../utils/util");
 var crowller_1 = __importDefault(require("../utils/crowller"));
 var analyzer_1 = __importDefault(require("../utils/analyzer"));
+var secretKey_1 = __importDefault(require("../utils/secretKey"));
 var checkLogin = function (req, res, next) {
     var isLogin = !!(req.session ? req.session.login : false);
     if (isLogin) {
@@ -35,8 +36,7 @@ var CrowllerController = (function () {
     function CrowllerController() {
     }
     CrowllerController.prototype.getData = function (req, res) {
-        var secret = 'secretKey1';
-        var url = "http://www.dell-lee.com/typescript/demo.html?secret=" + secret;
+        var url = "http://www.dell-lee.com/typescript/demo.html?secret=" + secretKey_1.default;
         var analyzer = analyzer_1.default.getInstance();
         try {
             new crowller_1.default(url, analyzer);

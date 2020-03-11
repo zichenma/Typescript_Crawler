@@ -6,9 +6,18 @@ import { controller, get, use } from '../decorator';
 import { getResponseData } from '../utils/util';
 import Crowller from '../utils/crowller';
 import Analyzer from '../utils/analyzer';
+import SECRET_KEY from '../utils/secretKey';
 
 interface BodyRequest extends Request {
   body: { [key: string]: string | undefined };
+}
+
+interface CourseItem {
+  title: string;
+  count: number;
+}
+interface DataStructure {
+  [key: string]: CourseItem[];
 }
 
 const checkLogin = (req: Request, res: Response, next: NextFunction): void => {
@@ -29,14 +38,13 @@ export class CrowllerController {
   @get('/getData')
   @use(checkLogin)
   getData(req: BodyRequest, res: Response): void {
-    const secret = 'secretKey1';
-    const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
+    const url = `http://www.dell-lee.com/typescript/demo.html?secret=${SECRET_KEY}`;
     const analyzer = Analyzer.getInstance();
     try {
       new Crowller(url, analyzer);
-      res.json(getResponseData(true));
+      res.json(getResponseData<boolean>(true));
     } catch (error) {
-      res.json(getResponseData(false, `Error: ${error}`));
+      res.json(getResponseData<boolean>(false, `Error: ${error}`));
     }
   }
   @get('/showData')
@@ -45,9 +53,9 @@ export class CrowllerController {
     try {
       const position = path.resolve(__dirname, '../../data/course.json');
       const result = fs.readFileSync(position, 'utf8');
-      res.json(getResponseData(JSON.parse(result)));
+      res.json(getResponseData<DataStructure>(JSON.parse(result)));
     } catch (e) {
-      res.json(getResponseData(false, 'Not content yet'));
+      res.json(getResponseData<boolean>(false, 'Not content yet'));
     }
   }
 }

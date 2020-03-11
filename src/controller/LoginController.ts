@@ -43,7 +43,7 @@ export class LoginController {
     const isLogin = LoginController.isLogin(req);
 
     if (isLogin) {
-      res.json(getResponseData<responseResult.login>(true));
+      res.json(getResponseData(true));
     } else {
       if (password === '123' && req.session) {
         req.session.login = true;

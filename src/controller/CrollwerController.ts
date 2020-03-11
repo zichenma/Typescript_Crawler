@@ -12,13 +12,7 @@ interface BodyRequest extends Request {
   body: { [key: string]: string | undefined };
 }
 
-interface CourseItem {
-  title: string;
-  count: number;
-}
-interface DataStructure {
-  [key: string]: CourseItem[];
-}
+
 
 const checkLogin = (req: Request, res: Response, next: NextFunction): void => {
   const isLogin = !!(req.session ? req.session.login : false);
@@ -42,9 +36,9 @@ export class CrowllerController {
     const analyzer = Analyzer.getInstance();
     try {
       new Crowller(url, analyzer);
-      res.json(getResponseData<boolean>(true));
+      res.json(getResponseData<responseResult.getData>(true));
     } catch (error) {
-      res.json(getResponseData<boolean>(false, `Error: ${error}`));
+      res.json(getResponseData<responseResult.getData>(false, `Error: ${error}`));
     }
   }
   @get('/showData')
@@ -53,9 +47,9 @@ export class CrowllerController {
     try {
       const position = path.resolve(__dirname, '../../data/course.json');
       const result = fs.readFileSync(position, 'utf8');
-      res.json(getResponseData<DataStructure>(JSON.parse(result)));
+      res.json(getResponseData<responseResult.showData>(JSON.parse(result)));
     } catch (e) {
-      res.json(getResponseData<boolean>(false, 'Not content yet'));
+      res.json(getResponseData<responseResult.showData>(false, 'Not content yet'));
     }
   }
 }
